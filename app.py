@@ -1,7 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-
-app = FastAPI()
+import os
+root_path = "/" 
+if os.getenv("ROUTE"):
+    root_path = os.getenv("ROUTE")
+app = FastAPI(root_path=root_path)
 
 # In-memory "database"
 fake_db = {}
@@ -31,3 +34,7 @@ def create_item(item_id: int, item: Item):
         raise HTTPException(status_code=400, detail="Item already exists")
     fake_db[item_id] = item
     return {"message": "Item created", "item": item}
+
+@app.get("/heathcheck")
+def healthcheck():
+    return {"Status": "Success"}
