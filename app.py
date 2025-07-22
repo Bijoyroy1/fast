@@ -35,6 +35,6 @@ def create_item(item_id: int, item: Item):
     fake_db[item_id] = item
     return {"message": "Item created", "item": item}
 
-@app.get("/heathcheck")
+@app.get("/healthcheck")
 def healthcheck():
     return {"Status": "Success"}
